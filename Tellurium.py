@@ -1,5 +1,5 @@
 from flask import Flask, jsonify
-from os import system
+from subprocess import Popen as pop
 import serial
 app = Flask(__name__)
 ser = serial.Serial('', baudrate=9600, timeout=1)
@@ -21,7 +21,7 @@ def Zuruecksetzen():
     return jsonify({"Nachricht": "Das Tellurium hat sich automatisch zurueckgesetzt",  "color": "alert-primary"})
 @app.route('/shutdown')
 def shutdown():
-    system("shutdown -t 10")
+    pop("shutdown -t 10", shell=False)
     return jsonify({"Nachricht": "Die API fährt herunter. Die Motoren bleiben im Standby",  "color": "alert-primary"})
 
 
